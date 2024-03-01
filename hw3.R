@@ -247,13 +247,13 @@ RouletteNumbersOneByOne <- function(goal) {
       if (res[i,j] != 0) {
         next
       }
-      if (goal-i >=5){
+      if ((goal+1)-i >=5){
         res[i, i+5] = 6/37
         res[i, i-1] = 1-(6/37)
-      } else if (goal-i >= 2) {
+      } else if ((goal+1)-i >= 2) {
         res[i, i+2] = 12/37
         res[i, i-1] = 1-(12/37)
-      } else if (goal-i == 1){
+      } else {
         res[i, i+1] = 18/37
         res[i, i-1] = 1-(18/37)
       }
@@ -262,7 +262,7 @@ RouletteNumbersOneByOne <- function(goal) {
   return(res)
 }
 
-print(RouletteNumbersOneByOne(8))
+print(RouletteNumbersOneByOne(9))
 
 #print(RouletteRedAllIn(5))
 
