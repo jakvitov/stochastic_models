@@ -247,13 +247,13 @@ RouletteNumbersOneByOne <- function(goal) {
       if (res[i,j] != 0) {
         next
       }
-      if (j-i >=5){
+      if (goal-i >=5){
         res[i, i+5] = 6/37
         res[i, i-1] = 1-(6/37)
-      } else if (j-i >= 2) {
+      } else if (goal-i >= 2) {
         res[i, i+2] = 12/37
         res[i, i-1] = 1-(12/37)
-      } else if (j-i == 1){
+      } else if (goal-i == 1){
         res[i, i+1] = 18/37
         res[i, i-1] = 1-(18/37)
       }
