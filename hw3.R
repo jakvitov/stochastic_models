@@ -242,18 +242,20 @@ RouletteNumbersOneByOne <- function(goal) {
   #Bet - 12/37 -> -1 +2
   #Bet - 18/37 -> -1 +1
   for (i in 2:goal) {
-    for (j in 1:(goal+1)) {
+    for (j in i:(goal+1)) {
+      #Skip absorptive state
       if (res[i,j] != 0) {
         next
       }
-      if (goal - i >= 5) {
-        res[i,j] = 6/37
-      }
-      else if (goal - i >= 2) {
-        res[i,j] = 12/37
-      }
-      else {
-        res[i,j] = 18/37
+      if (j-i >=5){
+        res[i, i+5] = 6/37
+        res[i, i-1] = 1-(6/37)
+      } else if (j-i >= 2) {
+        res[i, i+2] = 12/37
+        res[i, i-1] = 1-(12/37)
+      } else if (j-i == 1){
+        res[i, i+1] = 18/37
+        res[i, i-1] = 1-(18/37)
       }
     }
   }
