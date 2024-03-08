@@ -18,6 +18,7 @@ RouletteNumbersOneByOne <- function(goal) {
       #We are more than 4 ahead
       if ((goal+1)-i >=5){
         res[i, i+5] = 6/37
+        #Probability of going back one coin
         res[i, i-1] = 1-(6/37)
         #We are more than 1 ahead
       } else if ((goal+1)-i >= 2) {
