@@ -2,11 +2,10 @@ library("expm")
 
 MatrixError <- function(P_est, P_true) {
   n = nrow(P_est)
-  bias = sum((1/(n^2))*(P_est-P_true))
-  mae = sum((1/(n^2))*abs(P_est-P_true))
-  rmse = sqrt(sum((1/(n^2))*(P_est-P_true)))
+  bias = sum(P_est-P_true)/(n^2)
+  mae = sum(abs(P_est-P_true))/(n^2)
+  rmse = sqrt(sum((P_est-P_true)^2)/(n^2))
   result = list(bias = bias, mae = mae, rmse = rmse)
-  
   return(result)
 }
 
