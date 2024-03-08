@@ -1,18 +1,16 @@
 library("expm")
 
 MatrixError <- function(P_est, P_true) {
-    n = nrow(P_est)
-    bias = 0
-    mae = 0
-    rmse = 0
-    for (i in 1:n){
-      for (j in 1:n) {
-        bias = bias + (P_est[i,j] - P_true[i,j])
-        mae = mae + abs(P_est[i,j] - P_true[i,j])
-        rmse = rmse + (P_est[i,j] - P_true[i,j])^2
-      }
-    }
-    result = list(bias = (1/n^2)*bias, mae = (1/n^2)*mae, rmse = ((1/n^2)*rmse)^(1/2))
+  n = nrow(P_est)
+  bias = sum((1/(n^2))*(P_est-P_true))
+  mae = sum((1/(n^2))*abs(P_est-P_true))
+  rmse = sqrt(sum((1/(n^2))*(P_est-P_true)))
+  result = list(bias = bias, mae = mae, rmse = rmse)
   
   return(result)
 }
+
+test_est = matrix(c(0.1, 0.9, 0.4, 0.6), nrow=2, ncol=2, byrow=TRUE)
+test_real = matrix(c(0.15, 0.85, 0.3, 0.7), nrow=2, ncol=2, byrow=TRUE)
+
+print(MatrixError(test_est, test_real))
