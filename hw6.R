@@ -1,33 +1,14 @@
-
-MarkovChainProfit <- function(P, R, v0, n) {
-  
-  s <- length(v0) # pocet stavu
-  
-  v <- matrix(NA, nrow = n + 1, s) # matice ocekavanych vynosu s pocty sledovanych kroku v radcich a s vychozimi stavy ve sloupcich
-  v[1, ] <- v0 # celkove vynosy za 0 kroku (jednorazove vynosy)
-  
-  q <- rowSums(P * R) # vektor primych vynosu
-  
-  for (m in 1:n) {
-    v[m + 1, ] <- q + P %*% v[m, ] # vektor celkovych vynosu za m kroku
-  }
-  
-  rownames(v) <- paste("doba", 0:n, sep = "_")
-  colnames(v) <- paste("poc", "stav", 1:s, sep = "_")
-  
-  return(v)
-  
-}
-
 #Transform input to list
 transformInput=function(input){
+  res = input
   if (is.null(input)){
-    input = list()
+    res = list()
   }
-  else if (is.vector(input)) {
-    input = list(input)
+  #Is vector data type
+  else if (is.vector(input) && is.atomic(input)) {
+    res = list(input)
   }
-  return(input)
+  return(res)
 }
 
 RobotMoveNew <- function(height, width, treasure, bomb) {
@@ -148,9 +129,15 @@ RobotMoveNew <- function(height, width, treasure, bomb) {
   
 }
 
-height <- 3
-width <- 4
-treasure <- c(1, 4)
-bomb <- c(1, 2)
+#height <- 3
+#width <- 4
+#treasure <- c(1, 4)
+#bomb <- c(1, 2)
 
-data <- RobotMoveNew(height, width, treasure, bomb)
+#data <- RobotMoveNew(height, width, treasure, bomb)
+
+#data2 <- RobotMoveNew(height, width, NULL, bomb)
+
+#data3 <- RobotMoveNew(height, width, list(c(1,2), c(2,4)), bomb)
+                      
+#data4 <- RobotMoveNew(height, width, list(c(2,4)), bomb)
