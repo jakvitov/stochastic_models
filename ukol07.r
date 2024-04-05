@@ -20,19 +20,22 @@ CallCenterQueue <- function(lambda, mu, alpha, o, w) {
   
   Q[s, s - 1] <- (o * mu)
   Q[s, s] <- (-o * mu)
+  if (w > 0){
   
-  #Queue calculations
-  for (i in s:(s+w - 1)) {
-    Q[i, i - 1] <- ((o * mu) + (i-s)*alpha)
-    Q[i, i + 1] <- lambda
-    Q[i, i] <- -(Q[i, i - 1] + Q[i, i + 1])
+    #Queue calculations
+    for (i in s:(s+w - 1)) {
+      Q[i, i - 1] <- ((o * mu) + (i-s)*alpha)
+      Q[i, i + 1] <- lambda
+      Q[i, i] <- -(Q[i, i - 1] + Q[i, i + 1])
+    }
+  
+
+    Q[s+w, s+w - 1] <- (o * mu)+(w*alpha)
+    Q[s+w, s+w] <- -Q[s+w, s+w - 1]
   }
-  
-  Q[s+w, s+w - 1] <- (o * mu)+(w*alpha)
-  Q[s+w, s+w] <- -Q[s+w, s+w - 1]
   
   return(Q)
 }
 
-#Q <- CallCenterQueue(lambda = 4, mu = 2, o = 3, alpha=5, w=2)
+#Q <- CallCenterQueue(lambda = 4, mu = 2, o = 3, alpha=5, w=0)
 #Q
