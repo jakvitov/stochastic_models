@@ -96,16 +96,20 @@ results <- SimulateMM1(lambda = lambda, mu = mu, max.time = max.time)
 NoQueueTime <- function(results) {
   
   states <- results$states
-  sum = 0;
-  n = 0;
-  for (i in 1:length(states$state)){
-    if (states$state[i] == 0 || states$state[i] == 1){
-        sum = sum + states$duration[i]
-        n = n + 1
+  times = c()
+  start = 0
+  for (i in 1:length(states$state - 1)){
+    if (states$state[i] == 1 && states$state[i + 1] == 2){
+      times = c(times, states$time.start[i + 1] - start)
+    }
+    else if (states$state[i] == 2 && states$state[i + 1] == 1){
+      start = states$time.end[i]
+    }
+    else if (i+1 == length(states$state)){
+      times = c(times, states$time.end[i + 1] - start)
     }
   }
-  
-  no_queue_mean <- sum/n
+  no_queue_mean <- mean(times)
   return(no_queue_mean)
   
 }
