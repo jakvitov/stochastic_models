@@ -88,16 +88,26 @@ SimulateMM1 <- function(lambda, mu, max.time = 100) {
 }
 
 
+lambda <- 15 # intenzita prichodu - v prumeru prijde 15 lidi za hodinu / prumerna doba mezi prichody je 4 minuty
+mu <- 20 # intenzita obsluhy - v prumeru je pokladna schopna obslouzit 20 lidi za hodinu / prumerna doba obsluhy je 3 minuty
+max.time <- 10 # cas, kdy obchod zavira / cas, kdy ukoncim simulaci
+results <- SimulateMM1(lambda = lambda, mu = mu, max.time = max.time)
+
 NoQueueTime <- function(results) {
   
   states <- results$states
-  
+  sum = 0;
+  n = 0;
   for (i in 1:length(states$state)){
-    
+    if (states$state[i] == 0 || states$state[i] == 1){
+        sum = sum + states$duration[i]
+        n = n + 1
+    }
   }
   
-  no_queue_mean <- mean()
-    
+  no_queue_mean <- sum/n
   return(no_queue_mean)
   
 }
+
+
