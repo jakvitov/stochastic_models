@@ -28,7 +28,7 @@
     
     for (c in min.c:max.c) {
       stationary = StationaryMMc(lambda = lambda, mu = mu, c = c, return.cut = 1e5)
-      queue_stationary = stationary[-(1: c+1)]
+      queue_stationary = stationary[-(1: (c+1))]
       q = sum(queue_stationary * log(seq_along(queue_stationary)))
       cost.queue = cost2*q
       cost.cashier <- cost1 * c
