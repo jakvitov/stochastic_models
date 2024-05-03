@@ -5,32 +5,27 @@ ImpulseResponse <- function(alpha = 0, phi = c(), theta = c(), sigma = 1) {
   q <- length(theta) # rad posloupnosti klouzavych souctu
   
   timeline_size = max(p,q,10)
+  zero_index = timeline_size + 1
   
-  timeline_size # pocet pocatecnich pozorovani
+  #Time and x values and e_values
+  time_values = (-timeline_size:(5*timeline_size))
+  e_values = rep(0, (timeline_size*6) + 1)
+  x_values = rep(alpha/(1-sum(phi)), (timeline_size*6) + 1)
+  #Only e_values are sigma
+  e_values[zero_index] = sigma
   
-  #Inicializace vektoru e
-  e <- rep(0, (timeline_size*5)+1)
-  e[1] = sigma
-  
-  #Inicializace prvních - hodnot
-  x <- rep(NA, timeline_size) 
-  #Hodnoty -timeline_size:-1
-  x[1:timeline_size] <- alpha/(1-sum(phi))
-  
-  x[(timeline_size + 1)] = alpha + sum(phi * x[(1):(1 - p)]) + sum(theta * e[(1 - 1):(1 - q)]) + e[1] # ARMA rekurze
-  
-  start_t = timeline_size + 2
-  end_t = (6*timeline_size)+1
-  for (t in start_t:end_t){
-    x[t] = alpha + sum(phi * x[(t - 1):(t - p)])
+  end_index = length(time_values)
+  #Fill in the missing x
+  for (t in zero_index:end_index){
+    x_values[t] <- alpha + sum(phi * x_values[(t - 1):(t - p)]) + sum(theta * e_values[(t - 1):(t - q)]) + e_values[t]
   }
   
+  impulse <- data.frame(t = time_values, x = x_values)
   
-  t = -timeline_size:(5*timeline_size)
-  impulse <- data.frame(t = t, x = x)
   
   return(impulse)
   
 }
 
 plot(ImpulseResponse(alpha = -0.5, phi = -0.8), type = "b")
+plot(ImpulseResponse(theta = seq(from = 2, to = 0.1, by = -0.1)), type = "b")
